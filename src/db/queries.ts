@@ -1,23 +1,15 @@
-// 'use server'
+'use server'
 
-// import sql from './connection';
+import { db } from "./connection"; // Import the database connection
 
-// // Fetch all orders
-// export const getOrders = async () => {
-//   return await sql`SELECT * FROM orders ORDER BY created_at DESC;`;
-// };
+// Fetch all categories
+export const getCategories = async () => {
+    const result = await db.query("SELECT * FROM categories");
+    return result.rows;
+};
 
-// // Insert a new order
-// export const insertOrder = async (userId: number, items: string, totalPrice: number) => {
-//   return await sql`
-//     INSERT INTO orders (user_id, items, total_price)
-//     VALUES (${userId}, ${items}, ${totalPrice})
-//     RETURNING *;
-//   `;
-// };
-
-// // Fetch user by username (for authentication)
-// export const getUserByUsername = async (username: string) => {
-//   const users = await sql`SELECT * FROM users WHERE username = ${username};`;
-//   return users[0]; // Return first result or undefined
-// };
+// Fetch all items
+export const getItems = async () => {
+    const result = await db.query("SELECT * FROM items");
+    return result.rows;
+};
