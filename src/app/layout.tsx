@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import './globals.css';
 
 export const metadata: Metadata = {
   title: "sushi",
@@ -12,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true}>
+      <body className="h-screen w-screen bg-pinkFour" suppressHydrationWarning={true}>
         {children}
       </body>
     </html>

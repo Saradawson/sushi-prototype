@@ -1,36 +1,34 @@
 'use client'
 
 import OrderButtons from "./OrderButtons";
-import { useEffect, useState } from "react";
-import { Item, Category } from "@/types/order";
+import OrderList from "./OrderList";
+import OrderForm from "./OrderForm";
+import { useState } from "react";
+import { OrderItem } from "@/types/order";
 
 
-const Order= () => {
-    const [categories, setCategories] = useState<Category[]>([]);
-    const [items, setItems] = useState<Item[]>([]);
-    const [loading, setLoading] = useState(true);
+const Order = () => {
+    // const [loading, setLoading] = useState(true);
+    const [order, setOrder] = useState<OrderItem[]>([])
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try{
-                const res = await fetch('/api/order');
-                if (!res.ok) throw new Error('Failed to fetch Categories');
-                const data = await res.json();
-                setCategories(data.categories);
-                setItems(data.items);
-            } catch (error){
-                console.log(error)
-            } finally {
-                setLoading(false);
-            }
+
+    const addItem = (item: Omit<OrderItem, "id" | "isSelected">) => {
+        const newId = order.length > 0 ? order[order.length - 1].id + 1 : 1;
+        const newItem = {
+            ...item,
+            id: newId,
+            isSelected: false
         }
-        fetchData();
-    }, []);
+        setOrder([...order, newItem]);
+        console.log(order);
+    }
 
-    if (loading) return <p>Loading...</p>
+    // if (loading) return <p>Loading...</p>
     return(
-        <div>
-            <OrderButtons categories={categories} items={items}></OrderButtons>
+        <div className="w-full h-full flex justify-end">
+            <OrderList order={order} setOrder={setOrder}></OrderList>
+            <OrderForm></OrderForm>
+            <OrderButtons addItem={addItem}></OrderButtons>
         </div>
     )
 }

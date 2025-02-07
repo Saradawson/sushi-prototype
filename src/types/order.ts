@@ -2,7 +2,7 @@
 export interface Item {
     id: string;
     name: string;
-    price: number | null;
+    price: number;
     inventory_count: number | null;
     category_id: string;
 }
@@ -15,16 +15,19 @@ export interface Category {
 }
 
 //Order Types
+
 export interface OrderItem {
-    item_id: string;
-    quantity: number;
+    id: number// Unique identifier
+    name: string
+    price: number
+    isSelected: boolean
 }
 
-export interface Order {
-    id: string;
-    items: OrderItem[];
+export interface SubmittedOrder {
+    id: number;
+    items: [];
     total_price: number;
-    created_at: Date;
+    sent_at: Date | null;
 }
 
 
